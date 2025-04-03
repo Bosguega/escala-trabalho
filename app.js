@@ -64,6 +64,7 @@ function selectWorkSchedule() {
     workDays.clear();
     offDays.clear();
 
+    // Preencher um ano para trás
     let pastDate = new Date(selectedDate);
     pastDate.setDate(pastDate.getDate() + 1);
     for (let i = 0; i < 365; i++) {
@@ -76,6 +77,7 @@ function selectWorkSchedule() {
         pastDate.setDate(pastDate.getDate() - 1);
     }
 
+    // Preencher um ano para frente
     let futureDate = new Date(selectedDate);
     for (let i = 0; i < 365; i++) {
         let dateString = futureDate.toISOString().split('T')[0];
@@ -86,7 +88,24 @@ function selectWorkSchedule() {
         }
         futureDate.setDate(futureDate.getDate() + 1);
     }
+
+    saveSchedule(); // Salvar a escala após definir
     updateCalendar();
+}
+
+// Salvar a escala no localStorage
+function saveSchedule() {
+    localStorage.setItem("workDays", JSON.stringify([...workDays]));
+    localStorage.setItem("offDays", JSON.stringify([...offDays]));
+}
+
+// Carregar a escala do localStorage
+function loadSchedule() {
+    const savedWorkDays = localStorage.getItem("workDays");
+    const savedOffDays = localStorage.getItem("offDays");
+
+    if (savedWorkDays) workDays = new Set(JSON.parse(savedWorkDays));
+    if (savedOffDays) offDays = new Set(JSON.parse(savedOffDays));
 }
 
 // Exibir popup para adicionar nota
