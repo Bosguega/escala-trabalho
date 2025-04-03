@@ -1,0 +1,72 @@
+/* Estilização geral */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+/* Caixa central onde fica o calendário */
+.container {
+    text-align: center;
+    width: 90%;
+    max-width: 450px;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Calendário responsivo */
+#calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 5px;
+    padding: 10px;
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+}
+
+.day, .day-name {
+    text-align: center;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.day-name {
+    font-weight: bold;
+    background: #ddd;
+}
+
+.work-day {
+    background: #4CAF50; /* Verde para dias de trabalho */
+    color: white;
+}
+
+.off-day {
+    background: #F44336; /* Vermelho para folga */
+    color: white;
+}
+
+/* Estilização dos botões */
+button {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    width: 100%;
+}
+
+button:hover {
+    background: #0056b3;
+}
