@@ -1,9 +1,14 @@
 let currentMonth = new Date().getMonth();
 let currentYear = new Date().getFullYear();
 let workDays = new Set(), offDays = new Set();
-let notes = JSON.parse(localStorage.getItem("notes")) || {}; // Carregar notas salvas
+let notes = {}; // Armazena notas associadas às datas
 
-document.addEventListener("DOMContentLoaded", updateCalendar);
+// Carregar dados salvos ao iniciar
+document.addEventListener("DOMContentLoaded", () => {
+    loadSchedule();
+    loadNotes();
+    updateCalendar();
+});
 
 function updateCalendar() {
     const grid = document.getElementById("calendar-grid");
@@ -13,6 +18,7 @@ function updateCalendar() {
     let daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
     let firstDay = new Date(currentYear, currentMonth, 1).getDay();
     
+    // Adiciona nomes dos dias da semana
     ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"].forEach(day => {
         let div = document.createElement("div");
         div.classList.add("day-name");
@@ -20,25 +26,27 @@ function updateCalendar() {
         grid.appendChild(div);
     });
 
+    // Preenche os dias vazios antes do primeiro dia do mês
     for (let i = 0; i < firstDay; i++) {
         let div = document.createElement("div");
         div.classList.add("empty");
         grid.appendChild(div);
     }
 
+    // Preenche os dias do mês
     for (let day = 1; day <= daysInMonth; day++) {
         let div = document.createElement("div");
         div.classList.add("day");
         div.textContent = day;
-
+        
         let dateStr = new Date(currentYear, currentMonth, day).toISOString().split('T')[0];
 
         if (workDays.has(dateStr)) div.classList.add("work-day");
         if (offDays.has(dateStr)) div.classList.add("off-day");
         if (notes[dateStr]) div.classList.add("note-day"); // Destacar dias com nota
-
+        
         div.onclick = () => showNotePopup(dateStr);
-
+        
         grid.appendChild(div);
     }
 }
@@ -54,8 +62,16 @@ function selectWorkSchedule() {
     const userDate = prompt("Digite a data inicial (DD/MM/YYYY):");
     if (!userDate) return;
 
-    const [day, month, year] = userDate.split("/").map(Number);
-    const selectedDate = new Date(year, month - 1, day);
+    // Converter de "DD/MM/YYYY" para "YYYY-MM-DD"
+    const dateParts = userDate.split("/");
+    if (dateParts.length !== 3) {
+        alert("Formato inválido. Use DD/MM/YYYY.");
+        return;
+    }
+
+    const formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
+    const selectedDate = new Date(formattedDate);
+
     if (isNaN(selectedDate.getTime())) {
         alert("Data inválida. Tente novamente.");
         return;
@@ -64,7 +80,6 @@ function selectWorkSchedule() {
     workDays.clear();
     offDays.clear();
 
-    // Preencher um ano para trás
     let pastDate = new Date(selectedDate);
     pastDate.setDate(pastDate.getDate() + 1);
     for (let i = 0; i < 365; i++) {
@@ -77,7 +92,6 @@ function selectWorkSchedule() {
         pastDate.setDate(pastDate.getDate() - 1);
     }
 
-    // Preencher um ano para frente
     let futureDate = new Date(selectedDate);
     for (let i = 0; i < 365; i++) {
         let dateString = futureDate.toISOString().split('T')[0];
@@ -89,7 +103,7 @@ function selectWorkSchedule() {
         futureDate.setDate(futureDate.getDate() + 1);
     }
 
-    saveSchedule(); // Salvar a escala após definir
+    saveSchedule();
     updateCalendar();
 }
 
@@ -108,21 +122,38 @@ function loadSchedule() {
     if (savedOffDays) offDays = new Set(JSON.parse(savedOffDays));
 }
 
-// Exibir popup para adicionar nota
-function showNotePopup(dateStr) {
-    let note = prompt("Digite sua nota:", notes[dateStr] || "");
-    if (note === null) return; // Cancelar
-
-    if (note.trim() === "") {
-        delete notes[dateStr]; // Apagar nota
-    } else {
-        notes[dateStr] = note; // Salvar nota
+// ========================
+// Adicionar notas ao calendário
+// ========================
+function showNotePopup(date) {
+    let existingNote = notes[date] || "";
+    let newNote = prompt("Digite sua nota:", existingNote);
+    
+    if (newNote !== null) {
+        if (newNote.trim() === "") {
+            delete notes[date]; // Remover nota se estiver vazia
+        } else {
+            notes[date] = newNote;
+        }
+        saveNotes();
+        updateCalendar();
     }
-
-    localStorage.setItem("notes", JSON.stringify(notes));
-    updateCalendar();
 }
 
+// Salvar notas no localStorage
+function saveNotes() {
+    localStorage.setItem("notes", JSON.stringify(notes));
+}
+
+// Carregar notas do localStorage
+function loadNotes() {
+    const savedNotes = localStorage.getItem("notes");
+    if (savedNotes) notes = JSON.parse(savedNotes);
+}
+
+// ========================
+// Registrar Service Worker para o PWA
+// ========================
 if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("service-worker.js")
       .then(() => console.log("Service Worker registrado!"))
