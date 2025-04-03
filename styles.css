@@ -86,3 +86,8 @@ button:hover {
 button {
     width: 100%; /* Ocupa toda a largura disponível */
 }
+
+.note-day {
+    background: yellow !important;
+    color: black !important;
+}
