@@ -53,14 +53,24 @@ function changeMonth(step) {
 }
 
 function selectWorkSchedule() {
-    const userDate = prompt("Digite a data inicial (YYYY-MM-DD):");
+    const userDate = prompt("Digite a data inicial (DD/MM/YYYY):");
     if (!userDate) return;
-    
-    const selectedDate = new Date(userDate);
+
+    // Converter de "DD/MM/YYYY" para "YYYY-MM-DD"
+    const dateParts = userDate.split("/");
+    if (dateParts.length !== 3) {
+        alert("Formato inválido. Use DD/MM/YYYY.");
+        return;
+    }
+
+    const formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
+    const selectedDate = new Date(formattedDate);
+
     if (isNaN(selectedDate.getTime())) {
         alert("Data inválida. Tente novamente.");
         return;
     }
+
     
     workDays.clear();
     offDays.clear();
