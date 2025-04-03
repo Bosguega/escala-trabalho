@@ -3,32 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendário de Trabalho</title>
+    <title>Escala de Trabalho</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="manifest" href="manifest.json">
 </head>
 <body>
-    <h1 id="month-year"></h1>
-    <div id="calendar-grid"></div>
-    <button onclick="changeMonth(-1)">◀ Mês Anterior</button>
-    <button onclick="selectWorkSchedule()">Definir Escala</button>
-    <button onclick="changeMonth(1)">Próximo Mês ▶</button>
-    <script src="app.js"></script>
-    <script>
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('service-worker.js');
-        }
-    </script>
+    <div class="container">
+        <!-- Navegação de mês -->
+        <div class="month-navigation">
+            <button id="prev-month" class="month-btn">
+                <span class="icon">&#9664;</span> <!-- Ícone da seta esquerda -->
+            </button>
+            <span id="month-year" class="month-year"></span>
+            <button id="next-month" class="month-btn">
+                <span class="icon">&#9654;</span> <!-- Ícone da seta direita -->
+            </button>
+        </div>
 
-    <!-- Modal para entrada de dados -->
-<div id="custom-modal" class="modal">
-    <div class="modal-content">
-        <span class="close-btn">&times;</span>
-        <h2 id="modal-title">Inserir Data</h2>
-        <input type="text" id="modal-input" placeholder="Digite aqui...">
-        <button id="modal-confirm">Confirmar</button>
+        <!-- Calendário -->
+        <div id="calendar-grid"></div>
+
+        <!-- Botões de ações -->
+        <div class="buttons-container">
+            <button onclick="selectWorkSchedule()">Selecionar Escala</button>
+        </div>
     </div>
-</div>
 
+    <!-- Modal -->
+    <div id="custom-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2 id="modal-title"></h2>
+            <input id="modal-input" type="text" />
+            <button id="modal-confirm">Confirmar</button>
+        </div>
+    </div>
+
+    <!-- Referência ao app.js -->
+    <script src="app.js"></script>
 </body>
 </html>

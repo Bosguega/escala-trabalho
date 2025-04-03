@@ -1,3 +1,4 @@
+const CACHE_NAME = "work-schedule-pwa-v1";
 const urlsToCache = [
   "/index.html",
   "/styles.css",
@@ -5,7 +6,6 @@ const urlsToCache = [
   "/icon-192.png",
   "/icon-512.png"
 ];
-
 
 // Instalando o Service Worker e salvando os arquivos no cache
 self.addEventListener("install", (event) => {
@@ -20,7 +20,10 @@ self.addEventListener("install", (event) => {
 self.addEventListener("fetch", (event) => {
   event.respondWith(
     caches.match(event.request).then((response) => {
-      return response || fetch(event.request);
+      return response || fetch(event.request).catch(() => {
+        // Página de fallback quando estiver offline
+        return caches.match("/offline.html");
+      });
     })
   );
 });

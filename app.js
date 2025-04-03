@@ -10,6 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     updateCalendar();
 });
 
+// Função para atualizar o calendário
 function updateCalendar() {
     const grid = document.getElementById("calendar-grid");
     grid.innerHTML = "";
@@ -51,12 +52,26 @@ function updateCalendar() {
     }
 }
 
+// Função para mudar o mês
 function changeMonth(step) {
     currentMonth += step;
-    if (currentMonth < 0) (currentMonth = 11, currentYear--);
-    if (currentMonth > 11) (currentMonth = 0, currentYear++);
+    if (currentMonth < 0) {
+        currentMonth = 11;
+        currentYear--;
+    }
+    if (currentMonth > 11) {
+        currentMonth = 0;
+        currentYear++;
+    }
     updateCalendar();
 }
+
+// Adicionando ouvintes de evento aos botões para mudar o mês
+document.getElementById("prev-month").onclick = () => changeMonth(-1); // Mês anterior
+document.getElementById("next-month").onclick = () => changeMonth(1); // Próximo mês
+
+
+
 
 function selectWorkSchedule() {
     showModal("Digite a data inicial", "DD/MM/YYYY", (userDate) => {

@@ -125,3 +125,57 @@ input {
     padding: 8px;
     margin-top: 10px;
 }
+
+/* Contêiner para navegação dos meses */
+.month-navigation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+/* Botões de navegação */
+.month-btn {
+    background-color: #007bff; /* Cor de fundo azul */
+    color: white;
+    border: none;
+    padding: 20px;
+    font-size: 20px;
+    border-radius: 10px; /* Canto arredondado */
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    aspect-ratio: 1; /* Garante a proporção 1:1 (quadrado) */
+    width: auto; /* Largura vai depender do conteúdo */
+}
+
+
+
+/* Ícones das setas */
+.icon {
+    font-size: 18px;
+}
+
+/* Efeito de hover para os botões */
+.month-btn:hover {
+    background-color: #0056b3;
+    transform: scale(1.1); /* Aumenta ligeiramente o tamanho do botão ao passar o mouse */
+}
+
+/* Efeito de foco para acessibilidade */
+.month-btn:focus {
+    outline: none;
+    box-shadow: 0 0 5px 2px #0056b3;
+}
+
+/* Texto centralizado para o mês/ano */
+.month-year {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+    text-transform: capitalize;
+}
