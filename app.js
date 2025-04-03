@@ -2,7 +2,11 @@ let currentMonth = new Date().getMonth();
 let currentYear = new Date().getFullYear();
 let workDays = new Set(), offDays = new Set();
 
-document.addEventListener("DOMContentLoaded", updateCalendar);
+// Carregar dados salvos ao iniciar
+document.addEventListener("DOMContentLoaded", () => {
+    loadSchedule();
+    updateCalendar();
+});
 
 function updateCalendar() {
     const grid = document.getElementById("calendar-grid");
@@ -63,7 +67,7 @@ function selectWorkSchedule() {
 
     // Preencher um ano para trás
     let pastDate = new Date(selectedDate);
-    pastDate.setDate(pastDate.getDate() + 1); // Começa 3 dias antes
+    pastDate.setDate(pastDate.getDate() + 1);
     for (let i = 0; i < 365; i++) {
         let dateString = pastDate.toISOString().split('T')[0];
         if (i % 4 < 2) {
@@ -85,12 +89,29 @@ function selectWorkSchedule() {
         }
         futureDate.setDate(futureDate.getDate() + 1);
     }
-    updateCalendar(currentMonth, currentYear);
+
+    saveSchedule(); // Salvar a escala após definir
+    updateCalendar();
 }
 
+// Salvar a escala no localStorage
+function saveSchedule() {
+    localStorage.setItem("workDays", JSON.stringify([...workDays]));
+    localStorage.setItem("offDays", JSON.stringify([...offDays]));
+}
+
+// Carregar a escala do localStorage
+function loadSchedule() {
+    const savedWorkDays = localStorage.getItem("workDays");
+    const savedOffDays = localStorage.getItem("offDays");
+
+    if (savedWorkDays) workDays = new Set(JSON.parse(savedWorkDays));
+    if (savedOffDays) offDays = new Set(JSON.parse(savedOffDays));
+}
+
+// Registrar Service Worker para o PWA
 if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("service-worker.js")
       .then(() => console.log("Service Worker registrado!"))
       .catch((error) => console.log("Falha ao registrar o Service Worker:", error));
-  }
-  
+}
