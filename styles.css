@@ -1,3 +1,4 @@
+
 /* Estilização geral */
 body {
     font-family: Arial, sans-serif;
@@ -73,7 +74,7 @@ button:hover {
 
 .buttons-container {
     position: fixed;
-    bottom: 20vh; /* Ajuste a altura conforme necessário */
+    bottom: 15vh; /* Ajuste a altura conforme necessário */
     left: 50%;
     transform: translateX(-50%);
     display: flex;
