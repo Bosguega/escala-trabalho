@@ -59,53 +59,54 @@ function changeMonth(step) {
 }
 
 function selectWorkSchedule() {
-    const userDate = prompt("Digite a data inicial (DD/MM/YYYY):");
-    if (!userDate) return;
+    showModal("Digite a data inicial", "DD/MM/YYYY", (userDate) => {
+        if (!userDate) return;
 
-    // Converter de "DD/MM/YYYY" para "YYYY-MM-DD"
-    const dateParts = userDate.split("/");
-    if (dateParts.length !== 3) {
-        alert("Formato inválido. Use DD/MM/YYYY.");
-        return;
-    }
-
-    const formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
-    const selectedDate = new Date(formattedDate);
-
-    if (isNaN(selectedDate.getTime())) {
-        alert("Data inválida. Tente novamente.");
-        return;
-    }
-
-    workDays.clear();
-    offDays.clear();
-
-    let pastDate = new Date(selectedDate);
-    pastDate.setDate(pastDate.getDate() + 1);
-    for (let i = 0; i < 365; i++) {
-        let dateString = pastDate.toISOString().split('T')[0];
-        if (i % 4 < 2) {
-            workDays.add(dateString);
-        } else {
-            offDays.add(dateString);
+        const dateParts = userDate.split("/");
+        if (dateParts.length !== 3) {
+            alert("Formato inválido. Use DD/MM/YYYY.");
+            return;
         }
-        pastDate.setDate(pastDate.getDate() - 1);
-    }
 
-    let futureDate = new Date(selectedDate);
-    for (let i = 0; i < 365; i++) {
-        let dateString = futureDate.toISOString().split('T')[0];
-        if (i % 4 < 2) {
-            workDays.add(dateString);
-        } else {
-            offDays.add(dateString);
+        const formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}`;
+        const selectedDate = new Date(formattedDate);
+
+        if (isNaN(selectedDate.getTime())) {
+            alert("Data inválida. Tente novamente.");
+            return;
         }
-        futureDate.setDate(futureDate.getDate() + 1);
-    }
 
-    saveSchedule();
-    updateCalendar();
+        workDays.clear();
+        offDays.clear();
+
+        let pastDate = new Date(selectedDate);
+        pastDate.setDate(pastDate.getDate() + 1);
+        for (let i = 0; i < 365; i++) {
+            let dateString = pastDate.toISOString().split('T')[0];
+            if (i % 4 < 2) {
+                workDays.add(dateString);
+            } else {
+                offDays.add(dateString);
+            }
+            pastDate.setDate(pastDate.getDate() - 1);
+        }
+
+        let futureDate = new Date(selectedDate);
+        for (let i = 0; i < 365; i++) {
+            let dateString = futureDate.toISOString().split('T')[0];
+            if (i % 4 < 2) {
+                workDays.add(dateString);
+            } else {
+                offDays.add(dateString);
+            }
+            futureDate.setDate(futureDate.getDate() + 1);
+        }
+
+        saveSchedule(); // Salvando os dados
+        updateCalendar(); // Atualiza o calendário
+    });
 }
+
 
 // Salvar a escala no localStorage
 function saveSchedule() {
@@ -127,9 +128,8 @@ function loadSchedule() {
 // ========================
 function showNotePopup(date) {
     let existingNote = notes[date] || "";
-    let newNote = prompt("Digite sua nota:", existingNote);
     
-    if (newNote !== null) {
+    showModal("Digite sua nota:", "Sua anotação aqui...", (newNote) => {
         if (newNote.trim() === "") {
             delete notes[date]; // Remover nota se estiver vazia
         } else {
@@ -137,8 +137,11 @@ function showNotePopup(date) {
         }
         saveNotes();
         updateCalendar();
-    }
+    }, existingNote);
 }
+
+
+
 
 // Salvar notas no localStorage
 function saveNotes() {
@@ -150,6 +153,30 @@ function loadNotes() {
     const savedNotes = localStorage.getItem("notes");
     if (savedNotes) notes = JSON.parse(savedNotes);
 }
+
+function showModal(title, placeholder, callback, initialValue = "") {
+    const modal = document.getElementById("custom-modal");
+    const modalTitle = document.getElementById("modal-title");
+    const modalInput = document.getElementById("modal-input");
+    const confirmBtn = document.getElementById("modal-confirm");
+    
+    modalTitle.textContent = title;
+    modalInput.placeholder = placeholder;
+    modalInput.value = initialValue; // Agora exibe a nota existente
+
+    modal.style.display = "flex";
+
+    confirmBtn.onclick = () => {
+        callback(modalInput.value);
+        modal.style.display = "none";
+    };
+
+    document.querySelector(".close-btn").onclick = () => {
+        modal.style.display = "none";
+    };
+}
+
+
 
 // ========================
 // Registrar Service Worker para o PWA
