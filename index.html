@@ -8,6 +8,24 @@
     <link rel="manifest" href="manifest.json">
 </head>
 <body>
+    <div class="legend-container">
+        <div class="legend-item">
+            <div class="color-box work-color" onclick="openColorPicker('work')"></div>
+            <span>Trabalho</span>
+        </div>
+        <div class="legend-item">
+            <div class="color-box off-color" onclick="openColorPicker('off')"></div>
+            <span>Folga</span>
+        </div>
+        <div class="legend-item">
+            <div class="color-box note-color" onclick="openColorPicker('note')"></div>
+            <span>Anotações</span>
+        </div>
+    </div>
+    
+    <!-- Filtro de cor (popup ou seletor) -->
+    <input type="color" id="color-picker" style="display:none;" onchange="changeColor(event)">
+    
     <div class="container">
         <!-- Navegação de mês -->
         <div class="month-navigation">

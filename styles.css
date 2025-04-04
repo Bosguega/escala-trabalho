@@ -1,182 +1,226 @@
-
-/* Estilização geral */
+/* Estilização geral do corpo da página */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f9fa;
+    font-family: Arial, sans-serif; /* Fonte padrão */
+    background-color: #f8f9fa; /* Cor de fundo clara */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
+    min-height: 100vh; /* Garante que o conteúdo ocupe toda a altura da tela */
     margin: 0;
 }
 
 /* Caixa central onde fica o calendário */
 .container {
-    text-align: center;
-    width: 90%;
-    max-width: 450px;
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center; /* Centraliza o texto */
+    width: 90%; /* Largura responsiva */
+    max-width: 450px; /* Largura máxima */
+    background: white; /* Fundo branco */
+    padding: 20px; /* Espaçamento interno */
+    border-radius: 10px; /* Bordas arredondadas */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Sombra sutil para dar profundidade */
 }
 
-/* Calendário responsivo */
+/* Estilo do calendário responsivo */
 #calendar-grid {
     display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
+    grid-template-columns: repeat(7, 1fr); /* 7 colunas, uma para cada dia da semana */
+    gap: 5px; /* Espaço entre os dias */
     padding: 10px;
     width: 100%;
     max-width: 400px;
-    margin: auto;
+    margin: auto; /* Centraliza o grid */
 }
 
+/* Estilos para os dias e cabeçalho de dias da semana */
 .day, .day-name {
-    text-align: center;
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 5px;
+    text-align: center; /* Centraliza o texto */
+    padding: 10px; /* Espaçamento interno */
+    font-size: 16px; /* Tamanho da fonte */
+    border-radius: 5px; /* Bordas arredondadas */
 }
 
 .day-name {
-    font-weight: bold;
-    background: #ddd;
+    font-weight: bold; /* Destaca os nomes dos dias da semana */
+    background: #ddd; /* Cor de fundo para o cabeçalho */
 }
 
+/* Estilos para os dias de trabalho */
 .work-day {
     background: #4CAF50; /* Verde para dias de trabalho */
-    color: white;
+    color: white; /* Texto branco */
 }
 
+/* Estilos para os dias de folga */
 .off-day {
     background: #F44336; /* Vermelho para folga */
-    color: white;
+    color: white; /* Texto branco */
 }
 
 /* Estilização dos botões */
 button {
-    background: #007bff;
-    color: white;
+    background: #007bff; /* Cor de fundo azul */
+    color: white; /* Texto branco */
     border: none;
-    padding: 10px;
-    margin: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 5px;
-    width: 100%;
+    padding: 10px; /* Espaçamento interno */
+    margin: 5px; /* Margem entre os botões */
+    font-size: 16px; /* Tamanho da fonte */
+    cursor: pointer; /* Mãozinha ao passar o mouse */
+    border-radius: 5px; /* Bordas arredondadas */
+    width: 100%; /* Largura total */
 }
 
 button:hover {
-    background: #0056b3;
+    background: #0056b3; /* Cor mais escura no hover */
 }
 
 .buttons-container {
-    position: fixed;
-    bottom: 15vh; /* Ajuste a altura conforme necessário */
-    left: 50%;
-    transform: translateX(-50%);
+    position: fixed; /* Fixa os botões na parte inferior da tela */
+    bottom: 15vh; /* Distância do fundo da tela */
+    left: 50%; /* Centraliza horizontalmente */
+    transform: translateX(-50%); /* Ajusta a posição para centralizar */
     display: flex;
-    flex-direction: column; /* Um abaixo do outro */
+    flex-direction: column; /* Coloca os botões um abaixo do outro */
     gap: 10px; /* Espaço entre os botões */
-    width: 90%;
-    max-width: 450px;
+    width: 90%; /* Largura responsiva */
+    max-width: 450px; /* Largura máxima */
 }
 
 button {
-    width: 100%; /* Ocupa toda a largura disponível */
+    width: 100%; /* Botão ocupa toda a largura disponível */
 }
 
+/* Estilos para os dias com anotações */
 .note-day {
-    background: yellow !important;
-    color: black !important;
+    background: yellow ; /* Amarelo para os dias com anotações */
+    color: black ; /* Texto preto */
 }
 
-/* Estilização do modal */
+/* Estilos para o modal (popup) */
 .modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
+    display: none; /* Modal inicialmente invisível */
+    position: fixed; /* Fica fixo na tela */
+    z-index: 1000; /* Aparece sobre outros elementos */
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5); /* Fundo semi-transparente */
+    justify-content: center; /* Centraliza o conteúdo */
     align-items: center;
 }
 
 .modal-content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    text-align: center;
-    width: 300px;
+    background-color: white; /* Fundo branco para o conteúdo */
+    padding: 20px; /* Espaçamento interno */
+    border-radius: 10px; /* Bordas arredondadas */
+    text-align: center; /* Centraliza o texto */
+    width: 300px; /* Largura do modal */
 }
 
 .close-btn {
-    float: right;
-    font-size: 20px;
-    cursor: pointer;
+    float: right; /* Posiciona o botão de fechar à direita */
+    font-size: 20px; /* Tamanho da fonte */
+    cursor: pointer; /* Mãozinha ao passar o mouse */
 }
 
 input {
-    width: 100%;
-    padding: 8px;
-    margin-top: 10px;
+    width: 100%; /* Largura total do input */
+    padding: 8px; /* Espaçamento interno */
+    margin-top: 10px; /* Espaço acima do input */
 }
 
-/* Contêiner para navegação dos meses */
+/* Estilos para a navegação entre meses */
 .month-navigation {
     display: flex;
-    justify-content: center;
+    justify-content: center; /* Centraliza os botões de navegação */
     align-items: center;
-    gap: 10px;
-    margin-top: 20px;
+    gap: 10px; /* Espaço entre os botões */
+    margin-top: 20px; /* Espaço acima da navegação */
 }
 
-/* Botões de navegação */
+/* Estilos para os botões de navegação de mês */
 .month-btn {
     background-color: #007bff; /* Cor de fundo azul */
-    color: white;
+    color: white; /* Texto branco */
     border: none;
-    padding: 20px;
-    font-size: 20px;
-    border-radius: 10px; /* Canto arredondado */
-    cursor: pointer;
+    padding: 20px; /* Espaçamento interno */
+    font-size: 20px; /* Tamanho da fonte */
+    border-radius: 10px; /* Bordas arredondadas */
+    cursor: pointer; /* Mãozinha ao passar o mouse */
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.3s ease, background-color 0.3s ease;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
-    aspect-ratio: 1; /* Garante a proporção 1:1 (quadrado) */
-    width: auto; /* Largura vai depender do conteúdo */
+    transition: transform 0.3s ease, background-color 0.3s ease; /* Animação suave */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+    aspect-ratio: 1; /* Garante que o botão tenha proporção quadrada */
+    width: auto; /* Largura automática */
 }
 
-
-
-/* Ícones das setas */
+/* Ícones para as setas de navegação */
 .icon {
-    font-size: 18px;
+    font-size: 18px; /* Tamanho do ícone */
 }
 
-/* Efeito de hover para os botões */
+/* Efeito de hover nos botões de navegação */
 .month-btn:hover {
-    background-color: #0056b3;
-    transform: scale(1.1); /* Aumenta ligeiramente o tamanho do botão ao passar o mouse */
+    background-color: #0056b3; /* Cor mais escura no hover */
+    transform: scale(1.1); /* Aumenta o botão quando passa o mouse */
 }
 
-/* Efeito de foco para acessibilidade */
+/* Efeito de foco nos botões para acessibilidade */
 .month-btn:focus {
-    outline: none;
-    box-shadow: 0 0 5px 2px #0056b3;
+    outline: none; /* Remove o contorno padrão */
+    box-shadow: 0 0 5px 2px #0056b3; /* Adiciona um destaque ao foco */
 }
 
-/* Texto centralizado para o mês/ano */
+/* Estilo do texto centralizado para o mês e ano */
 .month-year {
-    font-size: 18px;
-    font-weight: bold;
-    color: #333;
-    text-transform: capitalize;
+    font-size: 18px; /* Tamanho da fonte */
+    font-weight: bold; /* Negrito */
+    color: #333; /* Cor escura */
+    text-transform: capitalize; /* Primeira letra maiúscula */
+}
+
+/* Estilo do contêiner da legenda */
+.legend-container {
+    display: flex;
+    justify-content: center; /* Centraliza a legenda */
+    gap: 20px; /* Espaço entre os itens da legenda */
+    margin: 20px 0; /* Espaço acima e abaixo da legenda */
+}
+
+/* Estilo de cada item da legenda */
+.legend-item {
+    display: flex;
+    align-items: center; /* Alinha os elementos à esquerda */
+    gap: 10px; /* Espaço entre o quadrado de cor e o texto */
+    font-size: 18px; /* Tamanho da fonte */
+}
+
+/* Estilo dos quadrados coloridos na legenda */
+.color-box {
+    width: 20px; /* Largura do quadrado de cor */
+    height: 20px; /* Altura do quadrado de cor */
+    border-radius: 5px; /* Bordas arredondadas */
+    cursor: pointer; /* Mãozinha ao passar o mouse */
+}
+
+/* Cores iniciais para Trabalho, Folga e Anotações */
+.work-color {
+    background-color: #4CAF50; /* Verde */
+}
+
+.off-color {
+    background-color: #F44336; /* Vermelho */
+}
+
+.note-color {
+    background-color: yellow; /* Amarelo */
+}
+
+/* Estilo do input de cor (seletor) - escondido até ser necessário */
+#color-picker {
+    position: absolute;
+    top: -9999px; /* Escondido fora da tela */
 }
