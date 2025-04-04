@@ -2,7 +2,7 @@ const CACHE_NAME = "work-schedule-pwa-v1";
 const urlsToCache = [
   "/index.html",
   "/styles.css",
-  "/script.js",
+  "/app.js",
   "/icon-192.png",
   "/icon-512.png"
 ];
